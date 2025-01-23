@@ -9,9 +9,9 @@ import zipfile
 
 def checker(email: str, proxy: str) -> Optional[bool]:
 
-    username, password_host_port = proxy.split(':', 1)
-    password, host_port = password_host_port.split('@', 1)
-    host, port = host_port.split(':')
+    host_port, credentials = proxy_string.split('@', 1)
+    host, port = host_port.split(':', 1)
+    username, password = credentials.split(':', 1)
 
     manifest_json = """
     {
@@ -107,4 +107,4 @@ def checker(email: str, proxy: str) -> Optional[bool]:
         return None
 
 
-print(checker('...', '...')) #email, proxy - login:password@host:port
+print(checker('...', '...')) #email, proxy - host:port@login:password
