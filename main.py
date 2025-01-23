@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from typing import Optional
 import zipfile
+import os
 
 def checker(email: str, proxy: str) -> Optional[bool]:
 
@@ -70,6 +71,10 @@ def checker(email: str, proxy: str) -> Optional[bool]:
     try:
         chrome_options = webdriver.ChromeOptions()
 
+        chrome_options.add_argument("--headless") 
+        chrome_options.add_argument("--disable-gpu")  
+        chrome_options.add_argument("--log-level=3")
+
         pluginfile = 'proxy_auth_plugin.zip'
 
         with zipfile.ZipFile(pluginfile, 'w') as zp:
@@ -78,7 +83,7 @@ def checker(email: str, proxy: str) -> Optional[bool]:
 
         chrome_options.add_extension(pluginfile)
 
-        service = Service('....') #path to chrome_driver.exe
+        service = Service(executable_path="...", log_path=os.devnull) #full path to chrome_driver.exe
         driver = webdriver.Chrome(service=service, options=chrome_options)
         driver.get('https://accounts.firefox.com')
 
@@ -107,4 +112,5 @@ def checker(email: str, proxy: str) -> Optional[bool]:
         return None
 
 
-print(checker('...', '...')) #email, proxy - host:port@login:password
+print(checker('asdfasdf@mail.ru', 'pool.proxy.market:10000@QISr2hwBRVj7:RNW78Fm5')) #False
+print(checker('jim-3000@mail.ru', 'pool.proxy.market:10000@QISr2hwBRVj7:RNW78Fm5')) #True
