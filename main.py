@@ -9,7 +9,7 @@ import zipfile
 
 def checker(email: str, proxy: str) -> Optional[bool]:
 
-    host_port, credentials = proxy_string.split('@', 1)
+    host_port, credentials = proxy.split('@', 1)
     host, port = host_port.split(':', 1)
     username, password = credentials.split(':', 1)
 
